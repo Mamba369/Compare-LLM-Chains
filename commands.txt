@@ -1,0 +1,2 @@
+lsof -i :8080 | grep LISTEN | awk '{print $2}' | xargs kill -9
+python -c "from retriever import SimpleBingRetriever; retriever = SimpleBingRetriever(); retriever.run_local_server()"

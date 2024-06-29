@@ -152,7 +152,9 @@ class WikidataRetriever:
         def create_values_clause(triples: list) -> str:
             values = ""
             for s, p, o in triples:
-                values += f"('{html.escape(s)}' '{html.escape(p)}' '{html.escape(o)}')\n"
+                values += (
+                    f"('{html.escape(s)}' '{html.escape(p)}' '{html.escape(o)}')\n"
+                )
             return values
 
         def execute_sparql_query(values_clause: str) -> dict:
@@ -175,12 +177,16 @@ class WikidataRetriever:
                 self.sparql.setReturnFormat(JSON)
                 return self.sparql.query().convert()
             except Exception as e:
-                logger.error(f"QueryBadFormed: The SPARQL query is badly formed.\nQuery: {query}\nError: {e}")
+                logger.error(
+                    f"QueryBadFormed: The SPARQL query is badly formed.\nQuery: {query}\nError: {e}"
+                )
                 raise
 
         # Split the triples into batches
         batch_size = 20  # Further reduced batch size
-        batches = [triples[i:i + batch_size] for i in range(0, len(triples), batch_size)]
+        batches = [
+            triples[i : i + batch_size] for i in range(0, len(triples), batch_size)
+        ]
 
         labeled_triples = []
 
